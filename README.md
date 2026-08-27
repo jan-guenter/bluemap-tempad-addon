@@ -3,37 +3,38 @@
 A Java 21 BlueMap add-on for the exact `tempad-3.0.4-mc1.21.1` profile in All the Mons
 `1.2.0` / Minecraft `1.21.1`.
 
-Status: safe generated prototype. The exact artifact gate and BlueMap 5.22
-adapter compile, but the family-owned renderer is intentionally absent.
-BlueMap therefore retains stock rendering until the explicit
-`SCAFFOLD_NOT_IMPLEMENTED` markers are replaced. A release cannot pass while
-those markers remain.
+Status: owner-accepted `0.1.0-alpha.1` release candidate. The exact profile
+rerenders `timedoor_marker` and `chronomark` with their persisted attachment
+color, then projects a persisted slot-zero Tempad above `workstation` with the
+client's fixed-item pose and charge-stage textures.
 
 ## Build
 
 ```bash
-gradle --no-daemon -PbluemapSourcePath=../bluemap-backport clean check build
+gradle --no-daemon -PbluemapSourcePath=../bluemap-backport \
+  -PtempadJar=/path/to/tempad-1.21.1-3.0.4-all.jar \
+  clean prototypeCheck build
 ```
 
-`check` is the quick Java/checkstyle/archive gate. `prototypeCheck` additionally
-requires every exact candidate JAR property and validates the placeholder
-gallery. See `provenance/upstreams.json` for immutable artifact identities and
-the [execution guide](docs/EXECUTION.md) for the prototype-to-release loop.
+`check` is the quick Java, checkstyle, and archive gate. `prototypeCheck` also
+verifies the exact candidate identity and generated 12-cell gallery. See
+`provenance/upstreams.json` for immutable artifact identities and the
+[execution guide](docs/EXECUTION.md) for the prototype-to-release loop.
 
 ## Install
 
-After a renderer exists, place the production JAR in BlueMap's add-on pack
-directory and restart the BlueMap JVM. Removal plus one restart restores stock
-behavior; the add-on creates no custom world state.
+Place the candidate JAR in BlueMap's add-on pack directory and restart the
+BlueMap JVM. Removal plus one restart restores stock behavior; the add-on
+creates no custom world state.
 
 Set `-Dbluemap.tempad.disabled=true` to leave the exact profile inactive.
 
 ## Scope boundary
 
-The initial implementation must be limited to a small observed BlueMap defect.
-Live contents, fill levels, activity overlays, particles, animation phase, and
-unsupported states stay stock or deterministic-neutral unless the owner
-explicitly expands scope.
+Projector, workstation shell and child, metronome, unsupported inventory
+contents, particles, and animation stay stock. Missing or malformed exact
+renderer data takes the stock path. The default missing anchor color is
+`#ff6a00`; malformed explicit colors do not replace stock output.
 
 No Tempad binary, source, class, asset, captured mesh, or gallery is
 bundled in the add-on.

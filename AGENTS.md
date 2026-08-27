@@ -30,15 +30,17 @@ Mixins, or world state.
 - Gallery cases and renderer facts are family-owned; do not move them back to
   the generic scaffold.
 
-`SCAFFOLD_NOT_IMPLEMENTED` is permitted only during the fast prototype phase.
-The release gate rejects it.
+Scaffold-only implementation markers are not permitted after a renderer and
+family gallery exist. The release gate rejects them.
 
 ## Commands
 
-Compile and test the safe seed:
+Compile and test the prototype:
 
 ```bash
-gradle --no-daemon -PbluemapSourcePath=../bluemap-backport clean check build
+gradle --no-daemon -PbluemapSourcePath=../bluemap-backport \
+  -PtempadJar=/path/to/tempad-1.21.1-3.0.4-all.jar \
+  clean prototypeCheck build
 ```
 
 Verify a prototype with exact candidate JAR properties:
