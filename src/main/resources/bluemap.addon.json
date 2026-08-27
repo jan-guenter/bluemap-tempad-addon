@@ -1,0 +1,6 @@
+{
+  "id": "bluemap-tempad",
+  "entrypoint": "io.github.janguenter.bluemap.tempad.BlueMapTempadAddon",
+  "dependencies": [],
+  "soft-dependencies": []
+}
