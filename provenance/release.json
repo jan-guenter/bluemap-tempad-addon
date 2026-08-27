@@ -1,8 +1,53 @@
 {
-  "accepted_staging_entries": null,
-  "final_release_artifacts": null,
-  "note": "Loadable renderer prototype built and gated; populate release fields only after owner visual acceptance. This file is not packaged.",
-  "owner_accepted_staging": null,
+  "accepted_staging_entries": {
+    "entry_count": 31,
+    "path": "provenance/accepted-staging-entries.sha256",
+    "sha256": "fc3ed72d5d5e355f3668837236deb364847d4951d7e5b07aa0b4cdca9d437d1c"
+  },
+  "final_release_artifacts": {
+    "gradle_module": {
+      "file_name": "bluemap-tempad-addon-0.1.0-alpha.1.module.json",
+      "sha256": "0f6e52525dd0644ee94e0ffe38ad3652570f179b4f1c8eb78f88dcd62d7a2d99",
+      "size": 2810
+    },
+    "pom": {
+      "file_name": "bluemap-tempad-addon-0.1.0-alpha.1.pom",
+      "sha256": "2561162468849eaa4582c83827c8c5e56c3b37936a0fce0daba320786a24380a",
+      "size": 1311
+    },
+    "production_jar": {
+      "file_name": "bluemap-tempad-addon-0.1.0-alpha.1.jar",
+      "sha256": "0026de4bd3de80f52f11f6ae223351c7ecae51cbd59c0adc85ab755fddbae95d",
+      "size": 99536
+    },
+    "sources_jar": {
+      "file_name": "bluemap-tempad-addon-0.1.0-alpha.1-sources.jar",
+      "sha256": "5efc725f617c15a854d24955994e40c890ba8ad66082d9d527c180df06d4cf45",
+      "size": 68786
+    }
+  },
+  "note": "Owner-accepted staging identities and final publication artifacts are sealed here. This file is not packaged.",
+  "owner_accepted_staging": {
+    "accepted_on": "2026-08-27",
+    "addon_jar": {
+      "file_name": "bluemap-tempad-addon-0.1.0-SNAPSHOT.jar",
+      "sha256": "442a3e31da845751f83015bf1b9fbb9734cb20249417b19e692b446856b470c3",
+      "size": 99537
+    },
+    "candidate_inputs": {
+      "tempad": {
+        "file_name": "tempad-1.21.1-3.0.4-all.jar",
+        "sha256": "932dd8a1cbb86d7632330ee3b9da43211b7c7a2fb6246443fd8207f74a74eba3",
+        "size": 1696464
+      }
+    },
+    "gallery": {
+      "file_name": "tempad-gallery.zip",
+      "sha256": "411eb96bbaa4a5d5fe8826d77316d46f622e308ab36490f4e3ff2fc3e1b56c03",
+      "size": 2643
+    },
+    "visual_acceptance": true
+  },
   "repository": "https://github.com/jan-guenter/bluemap-tempad-addon",
   "schema_version": 1,
   "prototype_scope": [
@@ -10,6 +55,6 @@
     "workstation slot-zero Tempad item display with five charge stages",
     "stock projector, workstation shell and child, and metronome"
   ],
-  "status": "prototype-not-owner-accepted",
-  "version": "0.1.0-SNAPSHOT"
+  "status": "owner-accepted-release-candidate",
+  "version": "0.1.0-alpha.1"
 }

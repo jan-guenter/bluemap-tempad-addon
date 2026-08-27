@@ -3,7 +3,7 @@
 A Java 21 BlueMap add-on for the exact `tempad-3.0.4-mc1.21.1` profile in All the Mons
 `1.2.0` / Minecraft `1.21.1`.
 
-Status: loadable prototype, pending owner visual acceptance. The exact profile
+Status: owner-accepted `0.1.0-alpha.1` release candidate. The exact profile
 rerenders `timedoor_marker` and `chronomark` with their persisted attachment
 color, then projects a persisted slot-zero Tempad above `workstation` with the
 client's fixed-item pose and charge-stage textures.
