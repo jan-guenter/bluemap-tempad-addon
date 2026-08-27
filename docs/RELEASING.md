@@ -6,8 +6,7 @@ staging comparison needed to get useful visual feedback.
 
 After the owner accepts the candidate:
 
-1. Remove every `SCAFFOLD_NOT_IMPLEMENTED` marker and replace the stock-only
-   gallery case with the accepted bounded fixture.
+1. Confirm the renderer and bounded gallery contain no scaffold-only markers.
 2. Freeze the accepted staging JAR's non-manifest entry hashes in
    `provenance/accepted-staging-entries.sha256` with the one-time writer in
    `tools/verify_staged_equivalence.py --write`.

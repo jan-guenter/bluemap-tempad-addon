@@ -1,2 +1,18 @@
 case_id	label	x	y	z	block_state	expected
-stock-control	stone stock rendering control	176	100	175	minecraft:stone	stock-visible
+timedoor-default-up	default orange timedoor marker, up	172	100	172	tempad:timedoor_marker[up=true]	tinted-default-orange
+timedoor-red-down	red timedoor marker, down	176	100	172	tempad:timedoor_marker[up=false]{"neoforge:attachments":{"tempad:color":"red"}}	tinted-red
+chronomark-default-down	default orange chronomark, down	180	100	172	tempad:chronomark[up=false]	tinted-default-orange
+chronomark-cyan-up	cyan chronomark, up	184	100	172	tempad:chronomark[up=true]{"neoforge:attachments":{"tempad:color":"cyan"}}	tinted-cyan
+workstation-base-0	north base Tempad, empty	172	100	176	tempad:workstation[facing=north,has_tape=false]{Inventory:{Size:1,Items:[{Slot:0,id:"tempad:tempad",count:1,components:{"tempad:twister_equipped":0b,"tempad:chronon_content_tempad":0,"tempad:chronon_content_time_twister":0}}]}}	base-tempad-visible
+workstation-base-0	north base Tempad, empty terminal	171	100	176	tempad:workstation_child[facing=north]	stock-terminal-visible
+workstation-base-50	east base Tempad, half charge	176	100	176	tempad:workstation[facing=east,has_tape=false]{Inventory:{Size:1,Items:[{Slot:0,id:"tempad:tempad",count:1,components:{"tempad:twister_equipped":0b,"tempad:chronon_content_tempad":3000,"tempad:chronon_content_time_twister":0}}]}}	base-tempad-visible
+workstation-base-50	east base Tempad, half charge terminal	176	100	175	tempad:workstation_child[facing=east]	stock-terminal-visible
+workstation-attached-0	south attached Tempad, empty	180	100	176	tempad:workstation[facing=south,has_tape=true]{Inventory:{Size:1,Items:[{Slot:0,id:"tempad:tempad",count:1,components:{"tempad:twister_equipped":1b,"tempad:chronon_content_tempad":0,"tempad:chronon_content_time_twister":0}}]}}	attached-tempad-visible
+workstation-attached-0	south attached Tempad, empty terminal	181	100	176	tempad:workstation_child[facing=south]	stock-terminal-visible
+workstation-attached-100	west attached Tempad, full charge	184	100	176	tempad:workstation[facing=west,has_tape=false]{Inventory:{Size:1,Items:[{Slot:0,id:"tempad:tempad",count:1,components:{"tempad:twister_equipped":1b,"tempad:chronon_content_tempad":6000,"tempad:chronon_content_time_twister":3000}}]}}	attached-tempad-visible
+workstation-attached-100	west attached Tempad, full charge terminal	184	100	177	tempad:workstation_child[facing=west]	stock-terminal-visible
+workstation-empty	empty workstation	172	100	180	tempad:workstation[facing=south,has_tape=false]	stock-empty-workstation
+workstation-empty	empty workstation terminal	173	100	180	tempad:workstation_child[facing=south]	stock-terminal-visible
+projector-off	projector off without card	176	100	180	tempad:timedoor_projector[facing=south,has_card=false,triggered=false]	stock-projector-off
+projector-on	projector on with card	180	100	180	tempad:timedoor_projector[facing=south,has_card=true,triggered=true]	stock-projector-on
+metronome	metronome stock model	184	100	180	tempad:metronome	stock-metronome

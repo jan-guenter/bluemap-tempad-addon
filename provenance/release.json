@@ -1,10 +1,15 @@
 {
   "accepted_staging_entries": null,
   "final_release_artifacts": null,
-  "note": "Populate only after owner visual acceptance; this file is not packaged.",
+  "note": "Loadable renderer prototype built and gated; populate release fields only after owner visual acceptance. This file is not packaged.",
   "owner_accepted_staging": null,
   "repository": "https://github.com/jan-guenter/bluemap-tempad-addon",
   "schema_version": 1,
+  "prototype_scope": [
+    "timedoor_marker and chronomark attachment-color model rerender",
+    "workstation slot-zero Tempad item display with five charge stages",
+    "stock projector, workstation shell and child, and metronome"
+  ],
   "status": "prototype-not-owner-accepted",
   "version": "0.1.0-SNAPSHOT"
 }
