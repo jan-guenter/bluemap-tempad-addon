@@ -10,6 +10,12 @@ client's fixed-item pose and charge-stage textures.
 
 ## Build
 
+Clone with `--recurse-submodules`, or initialize an existing checkout with
+`git submodule update --init --recursive -- tooling/bluemap-addon-toolkit`.
+The settings preflight accepts only the committed toolkit gitlink at commit
+`6cd34a8368cc4ee8628fbe830a90ec5b14960629` and rejects an uninitialized,
+changed, or dirty toolkit checkout.
+
 ```bash
 gradle --no-daemon -PbluemapSourcePath=../bluemap-backport \
   -PtempadJar=/path/to/tempad-1.21.1-3.0.4-all.jar \
