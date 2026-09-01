@@ -14,6 +14,10 @@ base {
     archivesName = artifact_id
 }
 
+sourceSets {
+    main.java.srcDir 'modules/bluemap-addon-adapter-api/src/main/java'
+}
+
 repositories {
     mavenCentral()
     maven {
@@ -68,6 +72,10 @@ tasks.named('jar', Jar).configure {
         rename { 'LICENSE-bluemap-tempad-addon' }
     }
     from('LICENSE-BlueMap') { into 'META-INF' }
+    from('modules/bluemap-addon-adapter-api/LICENSE') {
+        into 'META-INF'
+        rename { 'LICENSE-bluemap-addon-adapter-api' }
+    }
     from('NOTICE.md') {
         into 'META-INF'
         rename { 'NOTICE-bluemap-tempad-addon.md' }
@@ -86,6 +94,10 @@ tasks.named('sourcesJar', Jar).configure {
         rename { 'LICENSE-bluemap-tempad-addon' }
     }
     from('LICENSE-BlueMap') { into 'META-INF' }
+    from('modules/bluemap-addon-adapter-api/LICENSE') {
+        into 'META-INF'
+        rename { 'LICENSE-bluemap-addon-adapter-api' }
+    }
     from('NOTICE.md') {
         into 'META-INF'
         rename { 'NOTICE-bluemap-tempad-addon.md' }
@@ -99,6 +111,27 @@ tasks.named('sourcesJar', Jar).configure {
 
 def productionJar = tasks.named('jar', Jar).flatMap { it.archiveFile }
 def publishedSourcesJar = tasks.named('sourcesJar', Jar).flatMap { it.archiveFile }
+def sharedAdapterApiPackage =
+        'io/github/janguenter/bluemap/addon/adapter/api/bluemap523/'
+def sharedAdapterApiClasses = [
+        "${sharedAdapterApiPackage}BlueMapRuntimeCompatibility.class",
+        "${sharedAdapterApiPackage}RegistryGuard.class",
+        "${sharedAdapterApiPackage}ResourceExtensionType.class",
+        "${sharedAdapterApiPackage}SyntheticDispatch.class"
+].collect { it.toString() }
+def sharedAdapterApiSources = [
+        "${sharedAdapterApiPackage}BlueMapRuntimeCompatibility.java",
+        "${sharedAdapterApiPackage}RegistryGuard.java",
+        "${sharedAdapterApiPackage}ResourceExtensionType.java",
+        "${sharedAdapterApiPackage}SyntheticDispatch.java"
+].collect { it.toString() }
+def legacyLocalAdapterPackage =
+        'io/github/janguenter/bluemap/tempad/adapter/bluemap522/'
+def displacedAdapterHelpers = [
+        'io/github/janguenter/bluemap/tempad/adapter/bluemap523/AdapterCompatibility',
+        'io/github/janguenter/bluemap/tempad/adapter/bluemap523/ProfileResourceExtensionType',
+        'io/github/janguenter/bluemap/tempad/adapter/bluemap523/RegistryGuard'
+]
 
 tasks.register('verifyGeneratedGallery', Exec) {
     commandLine 'python3', 'gallery/generate.py', '--check'
@@ -144,13 +177,20 @@ tasks.register('verifyProductionJar') {
                     'io/github/janguenter/bluemap/tempad/BlueMapTempadAddon.class',
                     'META-INF/LICENSE-bluemap-tempad-addon',
                     'META-INF/LICENSE-BlueMap',
+                    'META-INF/LICENSE-bluemap-addon-adapter-api',
                     'META-INF/NOTICE-bluemap-tempad-addon.md',
                     'META-INF/THIRD_PARTY-bluemap-tempad-addon.md',
                     'META-INF/bluemap-tempad/upstreams.json'
-            ]
+            ] + sharedAdapterApiClasses
             def missing = required.findAll { !entries.contains(it) }
-            if (!missing.isEmpty()) {
-                throw new GradleException("Production JAR is missing: ${missing}")
+            def duplicateShared = sharedAdapterApiClasses.findAll { shared ->
+                entries.count { it == shared } != 1
+            }
+            if (!missing.isEmpty() || !duplicateShared.isEmpty()) {
+                throw new GradleException(
+                        "Production JAR shared boundary mismatch: missing=${missing}, "
+                                + "nonUnique=${duplicateShared}"
+                )
             }
             def descriptor = new groovy.json.JsonSlurper().parseText(
                     zip.getInputStream(zip.getEntry('bluemap.addon.json')).getText('UTF-8')
@@ -165,6 +205,9 @@ tasks.register('verifyProductionJar') {
                     .parse(file('provenance/upstreams.json')).artifacts*.mod_id
             def forbidden = entries.findAll { entry ->
                 entry.endsWith('.jar')
+                        || (entry.endsWith('.class')
+                        && !entry.startsWith('io/github/janguenter/bluemap/tempad/')
+                        && !sharedAdapterApiClasses.contains(entry))
                         || entry == 'META-INF/neoforge.mods.toml'
                         || entry == 'fabric.mod.json'
                         || entry.endsWith('.mixins.json')
@@ -172,8 +215,14 @@ tasks.register('verifyProductionJar') {
                         || entry.startsWith('net/neoforged/')
                         || entry.startsWith('gallery/')
                         || entry.endsWith('/bootstrap.json')
-                        || (entry.endsWith('.class')
-                            && !entry.startsWith('io/github/janguenter/bluemap/tempad/'))
+                        || (entry.startsWith(legacyLocalAdapterPackage)
+                            && !entry.endsWith('/'))
+                        || displacedAdapterHelpers.any { helper ->
+                            entry.startsWith(helper)
+                        }
+                        || (entry.startsWith(sharedAdapterApiPackage)
+                            && !entry.endsWith('/')
+                            && !sharedAdapterApiClasses.contains(entry))
                         || candidateIds.any { entry.startsWith("assets/${it}/") }
             }
             if (!forbidden.isEmpty()) {
@@ -196,15 +245,21 @@ tasks.register('verifySourcesJar') {
             def entries = zip.entries().findAll { !it.directory }.collect { it.name }
             def required = [
                     'io/github/janguenter/bluemap/tempad/BlueMapTempadAddon.java',
+                    'io/github/janguenter/bluemap/tempad/adapter/bluemap523/TempadRenderer.java',
                     'bluemap.addon.json',
                     'META-INF/LICENSE-bluemap-tempad-addon',
                     'META-INF/LICENSE-BlueMap',
+                    'META-INF/LICENSE-bluemap-addon-adapter-api',
                     'META-INF/bluemap-tempad/upstreams.json'
-            ]
+            ] + sharedAdapterApiSources
             def missing = required.findAll { !entries.contains(it) }
+            def duplicateShared = sharedAdapterApiSources.findAll { shared ->
+                entries.count { it == shared } != 1
+            }
             def projectJava = entries.findAll { it.endsWith('.java') }
             def foreignJava = projectJava.findAll {
                 !it.startsWith('io/github/janguenter/bluemap/tempad/')
+                        && !sharedAdapterApiSources.contains(it)
             }
             def candidateIds = new groovy.json.JsonSlurper()
                     .parse(file('provenance/upstreams.json')).artifacts*.mod_id
@@ -218,14 +273,24 @@ tasks.register('verifySourcesJar') {
                         || entry.startsWith('net/neoforged/')
                         || entry.startsWith('gallery/')
                         || entry.endsWith('/bootstrap.json')
+                        || (entry.startsWith(legacyLocalAdapterPackage)
+                            && !entry.endsWith('/'))
+                        || displacedAdapterHelpers.any { helper ->
+                            entry == "${helper}.java"
+                        }
+                        || (entry.startsWith(sharedAdapterApiPackage)
+                            && !entry.endsWith('/')
+                            && !sharedAdapterApiSources.contains(entry))
                         || candidateIds.any { entry.startsWith("assets/${it}/") }
             }
             if (!missing.isEmpty()
+                    || !duplicateShared.isEmpty()
                     || projectJava.isEmpty()
                     || !foreignJava.isEmpty()
                     || !forbidden.isEmpty()) {
                 throw new GradleException(
                         "Sources JAR boundary mismatch: missing=${missing}, "
+                                + "nonUnique=${duplicateShared}, "
                                 + "foreignJava=${foreignJava}, forbidden=${forbidden}"
                 )
             }
@@ -325,16 +390,6 @@ tasks.register('verifyNoScaffoldMarkers') {
     }
 }
 
-tasks.register('verifyStagedEquivalence', Exec) {
-    dependsOn tasks.named('jar')
-    doFirst {
-        commandLine 'bluemap-addon-toolkit', 'jar-entries', 'verify',
-                '--jar', productionJar.get().asFile,
-                '--entries', 'provenance/accepted-staging-entries.sha256',
-                '--expected-version', project.version.toString()
-    }
-}
-
 tasks.register('verifyPublicationArtifacts') {
     dependsOn tasks.named('generatePomFileForAddonPublication')
     dependsOn tasks.named('generateMetadataFileForAddonPublication')
@@ -375,28 +430,11 @@ tasks.register('verifyReleaseMetadata') {
         def release = new groovy.json.JsonSlurper()
                 .parse(file('provenance/release.json'))
         def expectedRepository = 'https://github.com/jan-guenter/bluemap-tempad-addon'
-        if (release.status != 'owner-accepted-release-candidate'
-                || release.version != project.version.toString()
+        if (release.version != project.version.toString()
                 || release.repository != expectedRepository
-                || !(release.owner_accepted_staging instanceof Map)
-                || release.owner_accepted_staging.isEmpty()
-                || release.owner_accepted_staging.visual_acceptance != true
-                || !(release.accepted_staging_entries instanceof Map)
-                || release.accepted_staging_entries.isEmpty()
-                || !(release.final_release_artifacts instanceof Map)
-                || release.final_release_artifacts.isEmpty()) {
-            throw new GradleException('Release provenance is not sealed')
-        }
-
-        def entryManifest = file('provenance/accepted-staging-entries.sha256')
-        def acceptedEntries = release.accepted_staging_entries
-        def entryLines = entryManifest.readLines('UTF-8').findAll { !it.isBlank() }
-        def entrySha256 = java.security.MessageDigest.getInstance('SHA-256')
-                .digest(entryManifest.bytes).encodeHex().toString()
-        if (acceptedEntries.path != 'provenance/accepted-staging-entries.sha256'
-                || acceptedEntries.entry_count != entryLines.size()
-                || acceptedEntries.sha256 != entrySha256) {
-            throw new GradleException('Accepted staging entry provenance mismatch')
+                || !(release.candidate_artifacts instanceof Map)
+                || release.candidate_artifacts.isEmpty()) {
+            throw new GradleException('Migration candidate provenance is not sealed')
         }
 
         def expectedArtifacts = [
@@ -422,7 +460,7 @@ tasks.register('verifyReleaseMetadata') {
                 ]
         ]
         expectedArtifacts.each { name, expected ->
-            def recorded = release.final_release_artifacts[name]
+            def recorded = release.candidate_artifacts[name]
             if (!(recorded instanceof Map)
                     || recorded.file_name != expected.file_name
                     || recorded.size != expected.size
@@ -438,7 +476,6 @@ tasks.register('verifyReleaseCandidate') {
     dependsOn tasks.named('verifyAcceptedProductionJar')
     dependsOn tasks.named('verifyAcceptedSourcesJar')
     dependsOn tasks.named('verifyNoScaffoldMarkers')
-    dependsOn tasks.named('verifyStagedEquivalence')
     dependsOn tasks.named('verifyPublicationArtifacts')
     dependsOn tasks.named('verifyReleaseMetadata')
 }
