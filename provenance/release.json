@@ -33,24 +33,31 @@
   "candidate_artifacts": {
     "production_jar": {
       "file_name": "bluemap-tempad-addon-0.1.0-alpha.2.jar",
-      "size": 0,
-      "sha256": "PENDING"
+      "size": 104907,
+      "sha256": "d28c566a5b4f9e81ad3530b2d9210ba0187acccbcae0ce5b69e6d47df211e4ee"
     },
     "sources_jar": {
       "file_name": "bluemap-tempad-addon-0.1.0-alpha.2-sources.jar",
-      "size": 0,
-      "sha256": "PENDING"
+      "size": 74043,
+      "sha256": "4e894154a72b08023fb4f002d95e593f2147d5c61ee73a15b8918d305355cace"
     },
     "pom": {
       "file_name": "bluemap-tempad-addon-0.1.0-alpha.2.pom",
-      "size": 0,
-      "sha256": "PENDING"
+      "size": 1311,
+      "sha256": "6980b1da7a88f317721c5538bd338fa37c0e28b15142951f33e679870d07f1ca"
     },
     "gradle_module": {
       "file_name": "bluemap-tempad-addon-0.1.0-alpha.2.module.json",
-      "size": 0,
-      "sha256": "PENDING"
+      "size": 2812,
+      "sha256": "2a0f35cfbc151b2edd526f292c1f5db279f6a269dcdf72dd0a1f8bddf58efbde"
     }
+  },
+  "gallery_candidate": {
+    "file_name": "tempad-gallery.zip",
+    "size": 2643,
+    "sha256": "411eb96bbaa4a5d5fe8826d77316d46f622e308ab36490f4e3ff2fc3e1b56c03",
+    "deterministic_rebuild": true,
+    "matches_alpha_1_owner_accepted_gallery": true
   },
   "preserved_contract": {
     "routed_hosts": 3,
@@ -72,8 +79,10 @@
     "adapter_api_gitlink_and_source_tree_gate": true,
     "production_archive_boundary_gate": true,
     "sources_archive_boundary_gate": true,
-    "local_candidate_artifact_identity_gate": false,
+    "local_candidate_artifact_identity_gate": true,
     "authoritative_pr_ci_reproduction": false,
+    "local_gradle_version": "9.6.1",
+    "local_java_runtime": "21.0.12.1+1",
     "exact_alpha_2_runtime_review": false
   }
 }
