@@ -3,7 +3,8 @@
 A Java 21 BlueMap add-on for the exact `tempad-3.0.4-mc1.21.1` profile in All the Mons
 `1.2.0` / Minecraft `1.21.1`.
 
-Status: owner-accepted `0.1.0-alpha.1` release candidate. The exact profile
+Version `0.1.0-alpha.2` is the unpublished native BlueMap 5.23 migration
+candidate. It preserves the owner-accepted `0.1.0-alpha.1` contract. The exact profile
 rerenders `timedoor_marker` and `chronomark` with their persisted attachment
 color, then projects a persisted slot-zero Tempad above `workstation` with the
 client's fixed-item pose and charge-stage textures.
@@ -11,21 +12,26 @@ client's fixed-item pose and charge-stage textures.
 ## Build
 
 Clone with `--recurse-submodules`, or initialize an existing checkout with
-`git submodule update --init --recursive -- tooling/bluemap-addon-toolkit`.
-The settings preflight accepts only the committed toolkit gitlink at commit
-`6cd34a8368cc4ee8628fbe830a90ec5b14960629` and rejects an uninitialized,
-changed, or dirty toolkit checkout.
+`git submodule update --init --recursive -- tooling/bluemap-addon-toolkit
+modules/bluemap-addon-adapter-api`.
+The settings preflight rejects either uninitialized, changed, or dirty exact
+gitlink.
 
 ```bash
-gradle --no-daemon -PbluemapSourcePath=../bluemap-backport \
+gradle --no-daemon -PbluemapSourcePath=/path/to/BlueMap-at-7e07f4e7 \
   -PtempadJar=/path/to/tempad-1.21.1-3.0.4-all.jar \
-  clean prototypeCheck build
+  -PreleaseTag=v0.1.0-alpha.2 clean prototypeCheck build \
+  generatePomFileForAddonPublication \
+  generateMetadataFileForAddonPublication verifyReleaseCandidate
 ```
 
 `check` is the quick Java, checkstyle, and archive gate. `prototypeCheck` also
 verifies the exact candidate identity and generated 12-cell gallery. See
 `provenance/upstreams.json` for immutable artifact identities and the
 [execution guide](docs/EXECUTION.md) for the prototype-to-release loop.
+
+The add-on compiles the four helpers from the exact Adapter API source-module
+gitlink. Its standalone JAR is neither installed nor nested.
 
 ## Install
 

@@ -1,60 +1,79 @@
 {
-  "accepted_staging_entries": {
-    "entry_count": 31,
-    "path": "provenance/accepted-staging-entries.sha256",
-    "sha256": "fc3ed72d5d5e355f3668837236deb364847d4951d7e5b07aa0b4cdca9d437d1c"
+  "schema_version": 1,
+  "status": "unpublished-migration-candidate",
+  "published": false,
+  "version": "0.1.0-alpha.2",
+  "release_date": "2026-09-01",
+  "repository": "https://github.com/jan-guenter/bluemap-tempad-addon",
+  "tag": "v0.1.0-alpha.2",
+  "maven_coordinate": "io.github.jan-guenter:bluemap-tempad-addon:0.1.0-alpha.2",
+  "bluemap": {
+    "version": "5.22-feature.backport-5.23-stateless-java-web-server-46",
+    "commit": "7e07f4e74ec1e92a6ead9aa1e66054af3e133aac",
+    "api_commit": "285c9a60eff3ac2b0cab308ce1058d1565be0971"
   },
-  "final_release_artifacts": {
-    "gradle_module": {
-      "file_name": "bluemap-tempad-addon-0.1.0-alpha.1.module.json",
-      "sha256": "0f6e52525dd0644ee94e0ffe38ad3652570f179b4f1c8eb78f88dcd62d7a2d99",
-      "size": 2810
-    },
-    "pom": {
-      "file_name": "bluemap-tempad-addon-0.1.0-alpha.1.pom",
-      "sha256": "2561162468849eaa4582c83827c8c5e56c3b37936a0fce0daba320786a24380a",
-      "size": 1311
-    },
+  "adapter_api": {
+    "version": "0.1.0-alpha.2",
+    "commit": "e81f08bc4bfbf02d810ec8949a019130e2e61634",
+    "source_tree": "2f974c9bb2ba13888d69682f86f30f58922d30eb",
+    "source_files_compiled": 4,
+    "module_jar_installed": false,
+    "module_jar_bundled": false,
+    "module_jar_nested": false,
+    "local_adapter_package": "io.github.janguenter.bluemap.tempad.adapter.bluemap523"
+  },
+  "baseline_release": {
+    "version": "0.1.0-alpha.1",
+    "tag": "v0.1.0-alpha.1",
+    "commit": "9bd217d681b55ef26089203431ea8fd5ff1db3bf",
+    "production_jar_size": 99536,
+    "production_jar_sha256": "0026de4bd3de80f52f11f6ae223351c7ecae51cbd59c0adc85ab755fddbae95d",
+    "owner_visual_acceptance": "2026-08-27"
+  },
+  "candidate_artifacts": {
     "production_jar": {
-      "file_name": "bluemap-tempad-addon-0.1.0-alpha.1.jar",
-      "sha256": "0026de4bd3de80f52f11f6ae223351c7ecae51cbd59c0adc85ab755fddbae95d",
-      "size": 99536
+      "file_name": "bluemap-tempad-addon-0.1.0-alpha.2.jar",
+      "size": 0,
+      "sha256": "PENDING"
     },
     "sources_jar": {
-      "file_name": "bluemap-tempad-addon-0.1.0-alpha.1-sources.jar",
-      "sha256": "5efc725f617c15a854d24955994e40c890ba8ad66082d9d527c180df06d4cf45",
-      "size": 68786
+      "file_name": "bluemap-tempad-addon-0.1.0-alpha.2-sources.jar",
+      "size": 0,
+      "sha256": "PENDING"
+    },
+    "pom": {
+      "file_name": "bluemap-tempad-addon-0.1.0-alpha.2.pom",
+      "size": 0,
+      "sha256": "PENDING"
+    },
+    "gradle_module": {
+      "file_name": "bluemap-tempad-addon-0.1.0-alpha.2.module.json",
+      "size": 0,
+      "sha256": "PENDING"
     }
   },
-  "note": "Owner-accepted staging identities and final publication artifacts are sealed here. This file is not packaged.",
-  "owner_accepted_staging": {
-    "accepted_on": "2026-08-27",
-    "addon_jar": {
-      "file_name": "bluemap-tempad-addon-0.1.0-SNAPSHOT.jar",
-      "sha256": "442a3e31da845751f83015bf1b9fbb9734cb20249417b19e692b446856b470c3",
-      "size": 99537
-    },
-    "candidate_inputs": {
-      "tempad": {
-        "file_name": "tempad-1.21.1-3.0.4-all.jar",
-        "sha256": "932dd8a1cbb86d7632330ee3b9da43211b7c7a2fb6246443fd8207f74a74eba3",
-        "size": 1696464
-      }
-    },
-    "gallery": {
-      "file_name": "tempad-gallery.zip",
-      "sha256": "411eb96bbaa4a5d5fe8826d77316d46f622e308ab36490f4e3ff2fc3e1b56c03",
-      "size": 2643
-    },
-    "visual_acceptance": true
+  "preserved_contract": {
+    "routed_hosts": 3,
+    "gallery_cases": 12,
+    "gallery_sources_changed": false,
+    "exact_mod_profile_changed": false,
+    "renderer_behavior_changed": false,
+    "stock_fallback_changed": false
   },
-  "repository": "https://github.com/jan-guenter/bluemap-tempad-addon",
-  "schema_version": 1,
-  "prototype_scope": [
-    "timedoor_marker and chronomark attachment-color model rerender",
-    "workstation slot-zero Tempad item display with five charge stages",
-    "stock projector, workstation shell and child, and metronome"
-  ],
-  "status": "owner-accepted-release-candidate",
-  "version": "0.1.0-alpha.1"
+  "ephemeral_ci_inputs": {
+    "tempad": {
+      "file_name": "tempad-1.21.1-3.0.4-all.jar",
+      "size": 1696464,
+      "sha256": "932dd8a1cbb86d7632330ee3b9da43211b7c7a2fb6246443fd8207f74a74eba3"
+    }
+  },
+  "verification": {
+    "exact_input_gate": true,
+    "adapter_api_gitlink_and_source_tree_gate": true,
+    "production_archive_boundary_gate": true,
+    "sources_archive_boundary_gate": true,
+    "local_candidate_artifact_identity_gate": false,
+    "authoritative_pr_ci_reproduction": false,
+    "exact_alpha_2_runtime_review": false
+  }
 }
