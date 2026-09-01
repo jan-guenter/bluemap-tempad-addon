@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "unpublished-migration-candidate",
+  "status": "owner-accepted-release-candidate",
   "published": false,
   "version": "0.1.0-alpha.2",
   "release_date": "2026-09-01",
@@ -59,6 +59,16 @@
     "deterministic_rebuild": true,
     "matches_alpha_1_owner_accepted_gallery": true
   },
+  "owner_accepted_staging": {
+    "integration_run": "next-review-batch-v38",
+    "integration_candidate_manifest_size": 135343,
+    "integration_candidate_manifest_sha256": "6d27c380945775bcec6a93bb510263e2aaaf23f8033fddd934bf3191634c120d",
+    "source_commit": "8141094853801f7ee9c940b3a20049d48a94c2b8",
+    "production_jar_size": 104907,
+    "production_jar_sha256": "d28c566a5b4f9e81ad3530b2d9210ba0187acccbcae0ce5b69e6d47df211e4ee",
+    "accepted_at": "2026-09-01",
+    "visual_acceptance": true
+  },
   "preserved_contract": {
     "routed_hosts": 3,
     "gallery_cases": 12,
@@ -83,6 +93,6 @@
     "authoritative_pr_ci_reproduction": false,
     "local_gradle_version": "9.6.1",
     "local_java_runtime": "21.0.12.1+1",
-    "exact_alpha_2_runtime_review": false
+    "exact_alpha_2_runtime_review": true
   }
 }
